@@ -2,9 +2,10 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Calendar, MapPin, Star, Filter, Search, ArrowLeft } from "lucide-react"
+import { Calendar, MapPin, Star, Filter, Search, ArrowLeft, Video } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { ChatBot } from "@/components/chat-bot"
+import { Badge } from "@/components/ui/badge"
 
 export default function DoctorsPage() {
   return (
@@ -21,6 +22,56 @@ export default function DoctorsPage() {
 
       {/* Main Content */}
       <main className="flex-1 container p-4">
+        {/* Section héro avec vidéo de présentation */}
+        <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h1 className="text-4xl font-bold mb-6">Nos Médecins Spécialisés</h1>
+                <p className="text-xl text-blue-100 mb-8">
+                  Découvrez notre équipe de professionnels de santé qualifiés, disponibles pour vous accompagner dans
+                  votre parcours de soins.
+                </p>
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold">500+</div>
+                    <div className="text-blue-200">Médecins</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold">15</div>
+                    <div className="text-blue-200">Spécialités</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold">24/7</div>
+                    <div className="text-blue-200">Disponibilité</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl font-bold">4.8★</div>
+                    <div className="text-blue-200">Note moyenne</div>
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
+                  <video
+                    className="w-full rounded-xl"
+                    controls
+                    poster="/images/doctors-team-presentation-poster.jpg"
+                    preload="metadata"
+                  >
+                    <source src="/videos/doctors-presentation.mp4" type="video/mp4" />
+                    <source src="/videos/doctors-presentation.webm" type="video/webm" />
+                    Votre navigateur ne supporte pas la lecture vidéo.
+                  </video>
+                </div>
+                {/* Éléments décoratifs */}
+                <div className="absolute -top-6 -right-6 w-24 h-24 bg-white/10 rounded-full"></div>
+                <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-white/10 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Search Bar */}
         <div className="relative mb-4">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -34,24 +85,30 @@ export default function DoctorsPage() {
           </Button>
         </div>
 
-        {/* Filters */}
+        {/* Filtres avec icônes de spécialités */}
         <div className="flex flex-wrap gap-2 mb-4">
-          <Button variant="outline" size="sm" className="rounded-full">
+          <Button variant="outline" size="sm" className="rounded-full bg-transparent">
+            <Image src="/images/all-specialties-icon.png" alt="Toutes" width={16} height={16} className="mr-2" />
             Tous
           </Button>
           <Button variant="outline" size="sm" className="rounded-full bg-blue-50 text-blue-600 border-blue-200">
+            <Image src="/images/cardiology-icon.png" alt="Cardiologie" width={16} height={16} className="mr-2" />
             Cardiologie
           </Button>
-          <Button variant="outline" size="sm" className="rounded-full">
+          <Button variant="outline" size="sm" className="rounded-full bg-transparent">
+            <Image src="/images/pediatrics-icon.png" alt="Pédiatrie" width={16} height={16} className="mr-2" />
             Pédiatrie
           </Button>
-          <Button variant="outline" size="sm" className="rounded-full">
+          <Button variant="outline" size="sm" className="rounded-full bg-transparent">
+            <Image src="/images/neurology-icon.png" alt="Neurologie" width={16} height={16} className="mr-2" />
             Neurologie
           </Button>
-          <Button variant="outline" size="sm" className="rounded-full">
+          <Button variant="outline" size="sm" className="rounded-full bg-transparent">
+            <Image src="/images/ophthalmology-icon.png" alt="Ophtalmologie" width={16} height={16} className="mr-2" />
             Ophtalmologie
           </Button>
-          <Button variant="outline" size="sm" className="rounded-full">
+          <Button variant="outline" size="sm" className="rounded-full bg-transparent">
+            <Image src="/images/gynecology-icon.png" alt="Gynécologie" width={16} height={16} className="mr-2" />
             Gynécologie
           </Button>
         </div>
@@ -126,20 +183,47 @@ export default function DoctorsPage() {
               available: true,
             },
           ].map((doctor) => (
-            <Card key={doctor.id} className="overflow-hidden hover:shadow-lg transition-all duration-300">
+            <Card key={doctor.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 group">
               <div className="relative">
                 <Image
                   src={doctor.image || "/placeholder.svg"}
                   alt={doctor.name}
                   width={400}
                   height={400}
-                  className="w-full h-64 object-cover object-top"
+                  className="w-full h-64 object-cover object-top group-hover:scale-105 transition-transform duration-300"
                 />
                 {!doctor.available && (
                   <div className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
                     Indisponible
                   </div>
                 )}
+                {/* Badge de spécialité */}
+                <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-2">
+                  <Image
+                    src={`/images/specialty-${doctor.specialty.toLowerCase().replace(/\s+/g, "-")}-icon.png`}
+                    alt={doctor.specialty}
+                    width={16}
+                    height={16}
+                    className="object-contain"
+                  />
+                  <span className="text-xs font-medium">{doctor.specialty}</span>
+                </div>
+                {/* Overlay avec informations rapides */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-4 left-4 right-4 text-white">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="flex">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star key={star} className="w-4 h-4 text-yellow-400 fill-current" />
+                        ))}
+                      </div>
+                      <span className="text-sm">
+                        {doctor.rating} ({doctor.reviews} avis)
+                      </span>
+                    </div>
+                    <p className="text-sm opacity-90">{doctor.experience} ans d'expérience</p>
+                  </div>
+                </div>
               </div>
               <CardContent className="p-4">
                 <div className="flex justify-between items-start mb-2">
@@ -161,8 +245,25 @@ export default function DoctorsPage() {
 
                 <div className="text-sm text-gray-600 mb-3">{doctor.experience} ans d&apos;expérience</div>
 
+                {/* Badges de services */}
+                <div className="flex flex-wrap gap-1 mb-3">
+                  <Badge variant="outline" className="text-xs">
+                    <Video className="w-3 h-3 mr-1" />
+                    Téléconsultation
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    <Calendar className="w-3 h-3 mr-1" />
+                    Urgences
+                  </Badge>
+                </div>
+
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1 text-blue-600 border-blue-600" asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1 text-blue-600 border-blue-600 bg-transparent"
+                    asChild
+                  >
                     <Link href={`/doctors/${doctor.id}`}>Profil</Link>
                   </Button>
                   <Button

@@ -196,6 +196,52 @@ export default function TeleconsultationPage() {
                   </AlertDescription>
                 </Alert>
 
+                {/* Vidéo explicative de la téléconsultation */}
+                <div className="mb-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                      <h2 className="text-2xl font-bold mb-4">Comment fonctionne la téléconsultation ?</h2>
+                      <p className="text-blue-100 mb-6">
+                        Découvrez en 2 minutes comment consulter un médecin depuis chez vous en toute sécurité.
+                      </p>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                            <span className="text-sm font-bold">1</span>
+                          </div>
+                          <span>Réservez votre créneau en ligne</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                            <span className="text-sm font-bold">2</span>
+                          </div>
+                          <span>Recevez le lien de connexion sécurisé</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                            <span className="text-sm font-bold">3</span>
+                          </div>
+                          <span>Consultez votre médecin par vidéo</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="relative">
+                      <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                        <video
+                          className="w-full rounded-lg"
+                          controls
+                          poster="/images/teleconsultation-demo-poster.jpg"
+                          preload="metadata"
+                        >
+                          <source src="/videos/teleconsultation-demo.mp4" type="video/mp4" />
+                          <source src="/videos/teleconsultation-demo.webm" type="video/webm" />
+                          Votre navigateur ne supporte pas la lecture vidéo.
+                        </video>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                   {/* Équipement requis */}
                   <div>
@@ -211,7 +257,15 @@ export default function TeleconsultationPage() {
                           onCheckedChange={(checked) => setEquipmentChecked((prev) => ({ ...prev, camera: checked }))}
                         />
                         <div className="flex items-center flex-1">
-                          <Camera className="w-5 h-5 mr-2 text-gray-600" />
+                          <div className="w-16 h-16 mr-3 rounded-lg overflow-hidden bg-gray-100">
+                            <Image
+                              src="/images/webcam-setup.png"
+                              alt="Configuration webcam"
+                              width={64}
+                              height={64}
+                              className="object-cover w-full h-full"
+                            />
+                          </div>
                           <div>
                             <Label htmlFor="camera" className="font-medium">
                               Appareil équipé d'une caméra et d'un micro
@@ -232,7 +286,15 @@ export default function TeleconsultationPage() {
                           }
                         />
                         <div className="flex items-center flex-1">
-                          <FileText className="w-5 h-5 mr-2 text-gray-600" />
+                          <div className="w-16 h-16 mr-3 rounded-lg overflow-hidden bg-gray-100">
+                            <Image
+                              src="/images/medical-documents.png"
+                              alt="Documents médicaux"
+                              width={64}
+                              height={64}
+                              className="object-cover w-full h-full"
+                            />
+                          </div>
                           <div>
                             <Label htmlFor="documents" className="font-medium">
                               Préparer ses documents médicaux
@@ -249,7 +311,15 @@ export default function TeleconsultationPage() {
                           onCheckedChange={(checked) => setEquipmentChecked((prev) => ({ ...prev, internet: checked }))}
                         />
                         <div className="flex items-center flex-1">
-                          <Wifi className="w-5 h-5 mr-2 text-gray-600" />
+                          <div className="w-16 h-16 mr-3 rounded-lg overflow-hidden bg-gray-100">
+                            <Image
+                              src="/images/wifi-connection.png"
+                              alt="Connexion Internet"
+                              width={64}
+                              height={64}
+                              className="object-cover w-full h-full"
+                            />
+                          </div>
                           <div>
                             <Label htmlFor="internet" className="font-medium">
                               Vérifier la connexion Internet
@@ -342,15 +412,15 @@ export default function TeleconsultationPage() {
                 <div className="mb-6 p-4 bg-gray-50 rounded-lg">
                   <h4 className="font-medium mb-3">Test de votre équipement</h4>
                   <div className="flex gap-3">
-                    <Button variant="outline" className="flex items-center gap-2">
+                    <Button variant="outline" className="flex items-center gap-2 bg-transparent">
                       <Camera className="w-4 h-4" />
                       Tester la caméra
                     </Button>
-                    <Button variant="outline" className="flex items-center gap-2">
+                    <Button variant="outline" className="flex items-center gap-2 bg-transparent">
                       <Mic className="w-4 h-4" />
                       Tester le micro
                     </Button>
-                    <Button variant="outline" className="flex items-center gap-2">
+                    <Button variant="outline" className="flex items-center gap-2 bg-transparent">
                       <Wifi className="w-4 h-4" />
                       Tester la connexion
                     </Button>
@@ -566,7 +636,7 @@ export default function TeleconsultationPage() {
                 </div>
 
                 <div className="flex justify-between mt-8">
-                  <Button variant="outline" onClick={prevStep} className="px-8">
+                  <Button variant="outline" onClick={prevStep} className="px-8 bg-transparent">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Retour
                   </Button>
@@ -621,14 +691,35 @@ export default function TeleconsultationPage() {
                               <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                                 <Video className="w-3 h-3 text-white" />
                               </div>
+                              {/* Indicateur de disponibilité en temps réel */}
+                              <div className="absolute -top-1 -left-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
                             </div>
 
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-1">
                                 <h3 className="font-bold text-lg">{doctor.name}</h3>
                                 <Badge className="bg-purple-600">Disponible</Badge>
+                                <Badge variant="outline" className="text-xs">
+                                  <Video className="w-3 h-3 mr-1" />
+                                  Téléconsultation
+                                </Badge>
                               </div>
                               <p className="text-purple-600 font-medium">{doctor.specialty}</p>
+
+                              {/* Aperçu du cabinet virtuel */}
+                              <div className="mt-2 p-2 bg-gray-50 rounded-lg">
+                                <div className="flex items-center gap-2">
+                                  <Image
+                                    src="/images/virtual-office-preview.png"
+                                    alt="Aperçu cabinet virtuel"
+                                    width={32}
+                                    height={24}
+                                    className="rounded object-cover"
+                                  />
+                                  <span className="text-xs text-gray-600">Cabinet virtuel sécurisé</span>
+                                </div>
+                              </div>
+
                               <div className="flex items-center gap-4 mt-2">
                                 <div className="flex items-center">
                                   {[1, 2, 3, 4, 5].map((star) => (
@@ -663,6 +754,16 @@ export default function TeleconsultationPage() {
                                 <Clock className="w-3 h-3 mr-1" />
                                 {doctor.nextAvailable}
                               </div>
+                              {/* Indicateur de qualité vidéo */}
+                              <div className="flex items-center justify-end mt-1">
+                                <div className="flex gap-1">
+                                  <div className="w-1 h-3 bg-green-500 rounded-full"></div>
+                                  <div className="w-1 h-3 bg-green-500 rounded-full"></div>
+                                  <div className="w-1 h-3 bg-green-500 rounded-full"></div>
+                                  <div className="w-1 h-3 bg-gray-300 rounded-full"></div>
+                                </div>
+                                <span className="text-xs text-gray-500 ml-1">HD</span>
+                              </div>
                             </div>
                           </div>
                         </CardContent>
@@ -671,7 +772,7 @@ export default function TeleconsultationPage() {
                 </div>
 
                 <div className="flex justify-between mt-8">
-                  <Button variant="outline" onClick={prevStep} className="px-8">
+                  <Button variant="outline" onClick={prevStep} className="px-8 bg-transparent">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Retour
                   </Button>
@@ -804,7 +905,7 @@ export default function TeleconsultationPage() {
                 </div>
 
                 <div className="flex justify-between mt-8">
-                  <Button variant="outline" onClick={prevStep} className="px-8">
+                  <Button variant="outline" onClick={prevStep} className="px-8 bg-transparent">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Retour
                   </Button>

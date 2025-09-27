@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Users, Heart, Globe, Target, Eye, Lightbulb, Shield } from "lucide-react"
+import { Users, Heart, Globe, Target, Eye, Lightbulb, Shield, MessageCircle, Calendar } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -111,50 +111,213 @@ export default function AboutPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-8">
+            {/* Vidéo de présentation */}
+            <div className="mb-8">
+              <div className="relative bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-4">Rencontrez notre équipe</h3>
+                    <p className="text-blue-100 mb-6">
+                      Découvrez les professionnels passionnés qui œuvrent chaque jour pour améliorer l'accès aux soins
+                      de santé au Gabon.
+                    </p>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                          <Heart className="w-4 h-4" />
+                        </div>
+                        <span>Médecins spécialisés et expérimentés</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                          <Globe className="w-4 h-4" />
+                        </div>
+                        <span>Équipe technique innovante</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                          <Shield className="w-4 h-4" />
+                        </div>
+                        <span>Support client dévoué</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                      <video
+                        className="w-full rounded-lg"
+                        controls
+                        poster="/images/team-presentation-poster.jpg"
+                        preload="metadata"
+                      >
+                        <source src="/videos/team-presentation.mp4" type="video/mp4" />
+                        <source src="/videos/team-presentation.webm" type="video/webm" />
+                        Votre navigateur ne supporte pas la lecture vidéo.
+                      </video>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <Image
-                  src="/images/doctor-male.png"
-                  alt="Dr. Jean Moussavou"
-                  width={120}
-                  height={120}
-                  className="rounded-full mx-auto mb-4"
-                />
+              <div className="text-center group">
+                <div className="relative mb-4 inline-block">
+                  <Image
+                    src="/images/doctor-male.png"
+                    alt="Dr. Jean Moussavou"
+                    width={120}
+                    height={120}
+                    className="rounded-full mx-auto group-hover:scale-105 transition-transform duration-300"
+                  />
+                  {/* Badge de spécialité */}
+                  <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                    <Image
+                      src="/images/cardiology-icon.png"
+                      alt="Cardiologie"
+                      width={20}
+                      height={20}
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
                 <h3 className="font-bold text-lg">Dr. Jean Moussavou</h3>
                 <p className="text-blue-600">Directeur Médical</p>
                 <p className="text-sm text-gray-600 mt-2">
                   Cardiologue avec 15 ans d'expérience, pionnier de la télémédecine au Gabon.
                 </p>
+                {/* Réseaux sociaux ou contact */}
+                <div className="flex justify-center gap-2 mt-3">
+                  <Button variant="outline" size="sm">
+                    <MessageCircle className="w-4 h-4" />
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <Calendar className="w-4 h-4" />
+                  </Button>
+                </div>
               </div>
 
-              <div className="text-center">
-                <Image
-                  src="/images/doctor-female-1.png"
-                  alt="Dr. Marie Ndong"
-                  width={120}
-                  height={120}
-                  className="rounded-full mx-auto mb-4"
-                />
+              <div className="text-center group">
+                <div className="relative mb-4 inline-block">
+                  <Image
+                    src="/images/doctor-female-1.png"
+                    alt="Dr. Marie Ndong"
+                    width={120}
+                    height={120}
+                    className="rounded-full mx-auto group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
+                    <Image
+                      src="/images/pediatrics-icon.png"
+                      alt="Pédiatrie"
+                      width={20}
+                      height={20}
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
                 <h3 className="font-bold text-lg">Dr. Marie Ndong</h3>
                 <p className="text-blue-600">Responsable Pédiatrie</p>
                 <p className="text-sm text-gray-600 mt-2">
                   Pédiatre spécialisée dans les soins aux enfants et la médecine préventive.
                 </p>
+                <div className="flex justify-center gap-2 mt-3">
+                  <Button variant="outline" size="sm">
+                    <MessageCircle className="w-4 h-4" />
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <Calendar className="w-4 h-4" />
+                  </Button>
+                </div>
               </div>
 
-              <div className="text-center">
-                <Image
-                  src="/images/doctor-female-2.png"
-                  alt="Dr. Claire Mouele"
-                  width={120}
-                  height={120}
-                  className="rounded-full mx-auto mb-4"
-                />
+              <div className="text-center group">
+                <div className="relative mb-4 inline-block">
+                  <Image
+                    src="/images/doctor-female-2.png"
+                    alt="Dr. Claire Mouele"
+                    width={120}
+                    height={120}
+                    className="rounded-full mx-auto group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center">
+                    <Image
+                      src="/images/gynecology-icon.png"
+                      alt="Gynécologie"
+                      width={20}
+                      height={20}
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
                 <h3 className="font-bold text-lg">Dr. Claire Mouele</h3>
                 <p className="text-blue-600">Gynécologue</p>
                 <p className="text-sm text-gray-600 mt-2">
                   Spécialiste en santé féminine et médecine intégrative traditionnelle.
                 </p>
+                <div className="flex justify-center gap-2 mt-3">
+                  <Button variant="outline" size="sm">
+                    <MessageCircle className="w-4 h-4" />
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <Calendar className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Galerie d'images de l'équipe au travail */}
+        <Card className="mb-12">
+          <CardHeader>
+            <CardTitle className="text-center text-2xl text-blue-600">Notre équipe en action</CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="relative h-32 rounded-lg overflow-hidden group">
+                <Image
+                  src="/images/doctors-team-1.png"
+                  alt="Équipe médicale en consultation"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">Consultation</span>
+                </div>
+              </div>
+              <div className="relative h-32 rounded-lg overflow-hidden group">
+                <Image
+                  src="/images/doctors-team-2.png"
+                  alt="Formation médicale"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">Formation</span>
+                </div>
+              </div>
+              <div className="relative h-32 rounded-lg overflow-hidden group">
+                <Image
+                  src="/images/doctors-team-3.png"
+                  alt="Équipe chirurgicale"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">Chirurgie</span>
+                </div>
+              </div>
+              <div className="relative h-32 rounded-lg overflow-hidden group">
+                <Image
+                  src="/images/medical-training.png"
+                  alt="Formation continue"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">Innovation</span>
+                </div>
               </div>
             </div>
           </CardContent>

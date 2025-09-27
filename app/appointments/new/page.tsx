@@ -27,8 +27,6 @@ import {
   CreditCard,
   FileText,
   AlertCircle,
-  Video,
-  Building,
   Navigation,
   MessageCircle,
 } from "lucide-react"
@@ -49,6 +47,7 @@ type Doctor = {
   languages: string[]
   experience: number
   verified: boolean
+  gallery: string[]
 }
 
 type Facility = {
@@ -126,7 +125,7 @@ export default function NewAppointmentPage() {
       id: 1,
       name: "Dr. Jean Moussavou",
       specialty: "Cardiologie",
-      image: "/images/doctor1.png",
+      image: "/images/cardio-medecin-gab.png",
       location: "Hôpital Central de Libreville - Estuaire",
       rating: 4.9,
       price: 25000,
@@ -135,12 +134,13 @@ export default function NewAppointmentPage() {
       languages: ["Français", "Fang"],
       experience: 15,
       verified: true,
+      gallery: ["/images/cardio-medecin-gab.png", "/images/cardio-consultation.png", "/images/cardio-equipment.png"],
     },
     {
       id: 2,
       name: "Dr. Marie Ndong",
       specialty: "Pédiatrie",
-      image: "/images/doctor2.png",
+      image: "/images/doctor-female-1.png",
       location: "Centre Hospitalier de Franceville - Haut-Ogooué",
       rating: 4.8,
       price: 20000,
@@ -149,12 +149,13 @@ export default function NewAppointmentPage() {
       languages: ["Français", "Téké"],
       experience: 12,
       verified: true,
+      gallery: ["/images/doctor-female-1.png", "/images/pediatric-care.png", "/images/children-consultation.png"],
     },
     {
       id: 3,
       name: "Dr. Pierre Obame",
       specialty: "Neurologie",
-      image: "/images/doctor3.png",
+      image: "/images/doctor-male.png",
       location: "Hôpital Régional de Port-Gentil - Ogooué-Maritime",
       rating: 4.7,
       price: 30000,
@@ -163,6 +164,7 @@ export default function NewAppointmentPage() {
       languages: ["Français", "Myéné"],
       experience: 18,
       verified: true,
+      gallery: ["/images/doctor-male.png", "/images/neurology-scan.png", "/images/brain-consultation.png"],
     },
   ]
 
@@ -563,8 +565,14 @@ export default function NewAppointmentPage() {
                       <div className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
                         <RadioGroupItem value="in-person" id="in-person" />
                         <Label htmlFor="in-person" className="flex items-center cursor-pointer flex-1">
-                          <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
-                            <Building className="w-6 h-6 text-blue-600" />
+                          <div className="w-16 h-16 rounded-xl bg-blue-100 flex items-center justify-center mr-4 overflow-hidden">
+                            <Image
+                              src="/images/consultation-in-person.png"
+                              alt="Consultation en personne"
+                              width={48}
+                              height={48}
+                              className="object-cover"
+                            />
                           </div>
                           <div>
                             <p className="font-semibold text-lg">Consultation en personne</p>
@@ -576,8 +584,14 @@ export default function NewAppointmentPage() {
                       <div className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-lg hover:border-green-300 transition-colors">
                         <RadioGroupItem value="video" id="video" />
                         <Label htmlFor="video" className="flex items-center cursor-pointer flex-1">
-                          <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mr-4">
-                            <Video className="w-6 h-6 text-green-600" />
+                          <div className="w-16 h-16 rounded-xl bg-green-100 flex items-center justify-center mr-4 overflow-hidden">
+                            <Image
+                              src="/images/teleconsultation-video.png"
+                              alt="Téléconsultation"
+                              width={48}
+                              height={48}
+                              className="object-cover"
+                            />
                           </div>
                           <div>
                             <p className="font-semibold text-lg">Téléconsultation</p>
@@ -691,6 +705,16 @@ export default function NewAppointmentPage() {
                                       <Check className="w-4 h-4 text-white" />
                                     </div>
                                   )}
+                                  {/* Badge de spécialité avec icône */}
+                                  <div className="absolute -top-2 -left-2 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center">
+                                    <Image
+                                      src={`/images/specialty-${doctor.specialty.toLowerCase().replace(/\s+/g, "-")}.png`}
+                                      alt={doctor.specialty}
+                                      width={20}
+                                      height={20}
+                                      className="object-contain"
+                                    />
+                                  </div>
                                 </div>
 
                                 <div className="flex-1">
@@ -703,6 +727,29 @@ export default function NewAppointmentPage() {
                                     <MapPin className="w-4 h-4 mr-1" />
                                     <span>{doctor.location}</span>
                                   </div>
+
+                                  {/* Galerie miniature */}
+                                  {doctor.gallery && (
+                                    <div className="flex gap-1 mt-2">
+                                      {doctor.gallery.slice(1, 3).map((img, idx) => (
+                                        <div key={idx} className="w-8 h-8 rounded overflow-hidden">
+                                          <Image
+                                            src={img || "/placeholder.svg"}
+                                            alt={`${doctor.name} - Image ${idx + 1}`}
+                                            width={32}
+                                            height={32}
+                                            className="object-cover w-full h-full"
+                                          />
+                                        </div>
+                                      ))}
+                                      {doctor.gallery.length > 3 && (
+                                        <div className="w-8 h-8 rounded bg-gray-100 flex items-center justify-center text-xs text-gray-600">
+                                          +{doctor.gallery.length - 3}
+                                        </div>
+                                      )}
+                                    </div>
+                                  )}
+
                                   <div className="flex items-center gap-4 mt-2">
                                     <div className="flex items-center">
                                       {[1, 2, 3, 4, 5].map((star) => (
@@ -912,11 +959,11 @@ export default function NewAppointmentPage() {
                             <MessageCircle className="w-4 h-4 mr-2" />
                             Envoyer un message
                           </Button>
-                          <Button variant="outline" className="flex-1">
+                          <Button variant="outline" className="flex-1 bg-transparent">
                             <Bookmark className="w-4 h-4 mr-2" />
                             Enregistrer
                           </Button>
-                          <Button variant="outline" className="flex-1">
+                          <Button variant="outline" className="flex-1 bg-transparent">
                             <Share2 className="w-4 h-4 mr-2" />
                             Partager
                           </Button>
@@ -981,7 +1028,7 @@ export default function NewAppointmentPage() {
               </Card>
 
               <div className="flex justify-between">
-                <Button type="button" variant="outline" onClick={prevStep} className="px-8">
+                <Button type="button" variant="outline" onClick={prevStep} className="px-8 bg-transparent">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Retour
                 </Button>
@@ -1106,7 +1153,7 @@ export default function NewAppointmentPage() {
                 )}
 
                 <div className="mt-8 flex justify-between">
-                  <Button type="button" variant="outline" onClick={prevStep} className="px-8">
+                  <Button type="button" variant="outline" onClick={prevStep} className="px-8 bg-transparent">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Retour
                   </Button>
@@ -1256,7 +1303,7 @@ export default function NewAppointmentPage() {
                 </div>
 
                 <div className="mt-8 flex justify-between">
-                  <Button type="button" variant="outline" onClick={prevStep} className="px-8">
+                  <Button type="button" variant="outline" onClick={prevStep} className="px-8 bg-transparent">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Retour
                   </Button>
@@ -1358,7 +1405,7 @@ export default function NewAppointmentPage() {
                 </div>
 
                 <div className="mt-8 flex justify-between">
-                  <Button type="button" variant="outline" onClick={prevStep} className="px-8">
+                  <Button type="button" variant="outline" onClick={prevStep} className="px-8 bg-transparent">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Retour
                   </Button>
@@ -1406,7 +1453,7 @@ export default function NewAppointmentPage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button variant="outline" className="border-green-600 text-green-600" asChild>
+                <Button variant="outline" className="border-green-600 text-green-600 bg-transparent" asChild>
                   <Link href="/appointments">
                     <Calendar className="w-4 h-4 mr-2" />
                     Voir mes rendez-vous

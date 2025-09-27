@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Image from "next/image"
+import { Badge } from "@/components/ui/badge"
 
 export default function FacilitiesPage() {
   return (
@@ -101,6 +102,48 @@ export default function FacilitiesPage() {
           </Button>
         </div>
 
+        {/* Vidéo de présentation des structures */}
+        <section className="bg-gradient-to-r from-green-600 to-blue-600 text-white py-12 mb-8">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div>
+                <h1 className="text-3xl font-bold mb-4">Réseau de Structures de Santé</h1>
+                <p className="text-lg text-green-100 mb-6">
+                  Découvrez notre réseau de 255+ structures de santé réparties dans les 9 provinces du Gabon.
+                </p>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">255+</div>
+                    <div className="text-green-200 text-sm">Structures</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">9</div>
+                    <div className="text-green-200 text-sm">Provinces</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">24/7</div>
+                    <div className="text-green-200 text-sm">Urgences</div>
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                  <video
+                    className="w-full rounded-lg"
+                    controls
+                    poster="/images/facilities-network-poster.jpg"
+                    preload="metadata"
+                  >
+                    <source src="/videos/facilities-tour.mp4" type="video/mp4" />
+                    <source src="/videos/facilities-tour.webm" type="video/webm" />
+                    Votre navigateur ne supporte pas la lecture vidéo.
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Tabs */}
         <Tabs defaultValue="all" className="mb-4">
           <TabsList className="grid grid-cols-4 w-full">
@@ -145,30 +188,72 @@ export default function FacilitiesPage() {
                 },
               ].map((facility, index) => (
                 <Link href={`/facility/${index + 1}`} key={index}>
-                  <Card className="hover:shadow-md transition-shadow">
+                  <Card className="hover:shadow-md transition-shadow group">
                     <CardContent className="p-3">
                       <div className="flex gap-3">
-                        <Image
-                          src={facility.image || "/placeholder.svg"}
-                          alt={facility.name}
-                          width={80}
-                          height={80}
-                          className="rounded-lg object-cover"
-                        />
+                        <div className="relative">
+                          <Image
+                            src={facility.image || "/placeholder.svg"}
+                            alt={facility.name}
+                            width={80}
+                            height={80}
+                            className="rounded-lg object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                          {/* Badge de type de structure */}
+                          <div className="absolute -top-1 -right-1 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                            <Image
+                              src="/images/hospital-badge-icon.png"
+                              alt="Hôpital"
+                              width={12}
+                              height={12}
+                              className="object-contain"
+                            />
+                          </div>
+                        </div>
                         <div className="flex-1">
                           <h3 className="font-medium">{facility.name}</h3>
                           <div className="flex items-center text-sm text-gray-500 mb-1">
                             <MapPin className="w-3 h-3 mr-1" />
                             <span>{facility.location}</span>
                           </div>
-                          <div className={`text-sm ${facility.isOpen ? "text-green-600" : "text-red-600"} mb-1`}>
+                          <div
+                            className={`text-sm ${facility.isOpen ? "text-green-600" : "text-red-600"} mb-1 flex items-center`}
+                          >
+                            <div
+                              className={`w-2 h-2 rounded-full mr-2 ${facility.isOpen ? "bg-green-500" : "bg-red-500"}`}
+                            ></div>
                             {facility.isOpen ? "Ouvert" : "Fermé"}
                           </div>
+
+                          {/* Services disponibles avec icônes */}
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            <Badge variant="outline" className="text-xs">
+                              <Image
+                                src="/images/emergency-icon.png"
+                                alt="Urgences"
+                                width={12}
+                                height={12}
+                                className="mr-1"
+                              />
+                              Urgences
+                            </Badge>
+                            <Badge variant="outline" className="text-xs">
+                              <Image
+                                src="/images/surgery-icon.png"
+                                alt="Chirurgie"
+                                width={12}
+                                height={12}
+                                className="mr-1"
+                              />
+                              Chirurgie
+                            </Badge>
+                          </div>
+
                           <div className="flex gap-2 mt-1">
                             <Button
                               variant="outline"
                               size="sm"
-                              className="text-xs text-blue-600 border-blue-600 h-7 px-2"
+                              className="text-xs text-blue-600 border-blue-600 h-7 px-2 bg-transparent"
                             >
                               En savoir plus
                             </Button>
